@@ -1,10 +1,10 @@
-package br.com.alura.screenmatch.principal;
+package br.com.arlei.screenmatch.principal;
 
-import br.com.alura.screenmatch.model.DadosSerie;
-import br.com.alura.screenmatch.model.DadosTemporada;
-import br.com.alura.screenmatch.model.Serie;
-import br.com.alura.screenmatch.service.ConsumoApi;
-import br.com.alura.screenmatch.service.ConverteDados;
+import br.com.arlei.screenmatch.model.DadosSerie;
+import br.com.arlei.screenmatch.model.DadosTemporada;
+import br.com.arlei.screenmatch.model.Serie;
+import br.com.arlei.screenmatch.service.ConsumoApi;
+import br.com.arlei.screenmatch.service.ConverteDados;
 
 import java.util.*;
 
