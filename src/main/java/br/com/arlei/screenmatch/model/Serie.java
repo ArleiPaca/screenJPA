@@ -23,7 +23,9 @@ public class Serie {
     private String atores;
     private String poster;
     private String sinopse;
-    @Transient
+    //@Transient que era para não persistir
+    // 1 serie tem varios episodios, na tabela episodio temos uma coluna serie_id
+    @OneToMany(mappedBy = "serie")
     private List<Episodio> episodios = new ArrayList<>();
 
 
