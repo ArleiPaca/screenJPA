@@ -25,25 +25,11 @@ public class Serie {
     private String sinopse;
     //@Transient que era para não persistir
     // 1 serie tem varios episodios, na tabela episodio temos uma coluna serie_id
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie",cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios = new ArrayList<>();
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Episodio> getEpisodios() {
-        return episodios;
-    }
-
-    public void setEpisodios(List<Episodio> episodios) {
-        this.episodios = episodios;
-    }
 
     // A JPA para os metodos de find necessita que tenhamos um construtor padrão.
     public Serie() {
@@ -59,6 +45,24 @@ public class Serie {
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
         this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+
+        episodios.forEach(episodio -> episodio.setSerie(this));
+        this.episodios = episodios;
     }
 
     public String getTitulo() {
@@ -119,14 +123,14 @@ public class Serie {
 
     @Override
     public String toString() {
-        return "Serie{" +
-                "genero=" + genero +
+        return
+        "genero=" + genero +
                 ", titulo='" + titulo + '\'' +
                 ", totalTemporadas=" + totalTemporadas +
                 ", avaliacao=" + avaliacao +
                 ", atores='" + atores + '\'' +
                 ", poster='" + poster + '\'' +
-                ", sinopse'" + sinopse + '\'' +
-                '}';
+                ", sinopse='" + sinopse + '\'' +
+                ", episodios='" + episodios + '\'';
     }
 }
