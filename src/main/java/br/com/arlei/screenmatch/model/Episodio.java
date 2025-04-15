@@ -1,7 +1,6 @@
 package br.com.arlei.screenmatch.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
