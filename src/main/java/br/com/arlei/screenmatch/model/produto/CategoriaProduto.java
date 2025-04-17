@@ -1,7 +1,6 @@
 package br.com.arlei.screenmatch.model.produto;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
