@@ -1,9 +1,6 @@
 package br.com.arlei.screenmatch.principal;
 
-import br.com.arlei.screenmatch.model.DadosSerie;
-import br.com.arlei.screenmatch.model.DadosTemporada;
-import br.com.arlei.screenmatch.model.Episodio;
-import br.com.arlei.screenmatch.model.Serie;
+import br.com.arlei.screenmatch.model.*;
 import br.com.arlei.screenmatch.repository.SerieRepository;
 import br.com.arlei.screenmatch.service.ConsumoApi;
 import br.com.arlei.screenmatch.service.ConverteDados;
@@ -40,6 +37,8 @@ public class Principal {
                     4 - Buscar Séries por Titulo
                     5 - Buscar séries por ator
                     6 - Top 5 Séries
+                    7 - Buscar Séries por Genero
+                    8 - Buscar Séries por Avaliação e Total de Temporadas
                                     
                     0 - Sair                                 
                     """;
@@ -67,12 +66,52 @@ public class Principal {
                 case 6:
                     BuscarTopSeries();
                     break;
+                case 7:
+                    BuscarPorGenero();
+                    break;
+                case 8:
+                    BuscarPorAvaliacaoTotalTempradas();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida");
             }
+        }
+    }
+
+    private void BuscarPorAvaliacaoTotalTempradas() {
+
+        System.out.println("Digite a avaliação mínima");
+        var avaliacao = leitura.nextDouble();
+        System.out.println("Digite o total de temporadas");
+        var totalTemporadas = leitura.nextInt();
+
+        try {
+            List<Serie> series =
+                    repositorio.findByAvaliacaoGreaterThanAndTotalTemporadasLessThanEqual(avaliacao
+                            , totalTemporadas);
+            series.forEach(System.out::println);
+
+        }
+        catch (Exception e) {
+            System.out.println("Nenhuma série encontrada com os parâmetros fornecidos");
+        }
+
+    }
+
+    private void BuscarPorGenero() {
+
+        System.out.println("Deseja buscar séries de que categoria/gênero? ");
+        var nomeGenero = leitura.nextLine();
+        try {
+            Categoria categoria = Categoria.fromPortugues(nomeGenero);
+            List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+            System.out.println("Séries da categoria " + nomeGenero);
+            seriesPorCategoria.forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println("Nenhuma categoria encontrada para a string fornecida: " + nomeGenero);
         }
     }
 
@@ -159,6 +198,7 @@ public class Principal {
 
         // poderia aqui buscar pelo novo metodo da opção 4
         // var serie = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+
         Optional<Serie> serie = series.stream()
                 .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
                 .findFirst();
