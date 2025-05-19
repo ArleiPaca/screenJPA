@@ -16,6 +16,7 @@ public class Episodio {
     private Double avaliacao;
     private LocalDate dataLancamento;
 
+    // bidirecional no metodo da pesquisa 9, posso buscar os valores em episodio de serie.
     @ManyToOne
     private Serie serie;
 
@@ -23,6 +24,7 @@ public class Episodio {
     }
 
     public Episodio(Integer numeroTemporada, DadosEpisodio dadosEpisodio) {
+
         this.temporada = numeroTemporada;
         this.titulo = dadosEpisodio.titulo();
         this.numeroEpisodio = dadosEpisodio.numero();
